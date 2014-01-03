@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  prospect_id: 
+  content: MyString
+  status: MyString
+  result: MyString
+
+two:
+  prospect_id: 
+  content: MyString
+  status: MyString
+  result: MyString

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ulixes</title>
+		<!-- Bootstrap core JavaScript -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+		
+		<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+		<%= csrf_meta_tags %>
+	</head>
+
+ <body>
+
+    <div id="wrapper">
+
+      <!-- Sidebar -->
+      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand lll" >Ulixes Admin</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav side-nav">
+          	
+          	
+          	<%
+			
+			@user.role.lock.each{|sm|
+				%>
+				<li id="menu_<%=sm[:name].hash%>" class="dropdown">
+					<a href="#" class="dropdown-toggle " data-toggle="dropdown"><i class="<%=sm[:icon]%>"></i> <%=sm[:name]%> <b class="caret"></b></a>
+					<ul class="dropdown-menu ">
+					<%
+					sm[:items].each{|m|
+						%>
+						<li><a onclick="localStorage.setItem('active_menu', '<%=sm[:name].hash%>')" href="<%="#{m[:uri]}"%>"><%=m[:name]%></a></li>
+						<%
+						}
+					%>	
+				</ul>
+				
+				<%
+			}
+			
+			%>
+          	
+          </ul>
+
+<script>
+	$('#menu_'+localStorage.getItem('active_menu')).addClass('active open');
+	console.log(localStorage.getItem('active_menu'));
+</script>
+
+          <ul class="nav navbar-nav navbar-right navbar-user">
+            
+            <li class="dropdown alerts-dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> System Alerts <span class="badge">3</span> <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Default <span class="label label-default">Default</span></a></li>
+                <li><a href="#">Primary <span class="label label-primary">Primary</span></a></li>
+                <li><a href="#">Success <span class="label label-success">Success</span></a></li>
+                <li><a href="#">Info <span class="label label-info">Info</span></a></li>
+                <li><a href="#">Warning <span class="label label-warning">Warning</span></a></li>
+                <li><a href="#">Danger <span class="label label-danger">Danger</span></a></li>
+                <li class="divider"></li>
+                <li><a href="#">View All</a></li>
+              </ul>
+            </li>
+            <li class="dropdown user-dropdown">
+              <a href="#" class="dropdown-toggle lll" data-toggle="dropdown"><i class="fa fa-user"></i> Logged in as <b><%=@user.login.upcase%></b> <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="/admin/logout"><i class="fa fa-power-off"></i> Log Out</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+
+      <div id="page-wrapper">
+		<%= yield %>
+      </div><!-- /#page-wrapper -->
+    </div><!-- /#wrapper -->
+
+    
+    
+    <!-- Page Specific Plugins -->
+    
+    
+  </body>
+</html>

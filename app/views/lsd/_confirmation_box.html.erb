@@ -1,0 +1,33 @@
+<script type="text/javascript">
+	function confirmAction(q, src) {
+		$('#lsd_confirmationBox').show('slow');
+		$('#lsd_confirmBoxQuestion').text(q);
+		$('#lsd_confirm_id').attr('value', src);
+
+	}
+
+	function abortAction() {
+		$('#lsd_confirmationBox').hide('slow');
+	}
+
+</script>
+
+<div id="lsd_confirmationBox" style="text-align: center ;display: none;float: right;padding: 10px" class="lsd_confirmBox">
+	<div  class="panel panel-default">
+		<div class="panel-heading">
+			You are about to <span id="lsd_confirmBoxQuestion"></span>
+		</div>
+		<div class="panel-body">
+			<%=form_tag("/delete/#{@entity}",class:"form-inline", role:"form") do%>
+				<input type="hidden" name="id" id="lsd_confirm_id" />
+				<button onclick="abortAction();return false;" class="btn btn-default">
+					Abort
+				</button>
+				<button type="submit" class="btn btn-default">
+					Confirm
+				</button>
+			<% end %>
+		</div>
+	</div>
+
+</div>
