@@ -4,4 +4,8 @@ class User < ActiveRecord::Base
   serialize :data, Hash
   to_info :login
   
+  def name
+    self.login
+  end
+  
 end
