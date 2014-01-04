@@ -17,7 +17,7 @@
 		<div class="form-group">
 			<label for="<%= k%>"><%= k.humanize%></label>
 			<%
-			logger.debug @entity.inspect
+			logger.debug k
 			desc = @entity.describe(k)
 
 			case desc[:type].to_sym

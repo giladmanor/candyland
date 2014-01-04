@@ -1,0 +1,38 @@
+.link {
+  transition: opacity 1s;
+  fill: none;
+  stroke: #666;
+  opacity: 0.4;
+  stroke-width: 20px;
+}
+
+.link:hover {
+	transition: opacity 1s;
+	opacity: 0.9;
+	filter: alpha(opacity=100); /* For IE8 and earlier */
+}
+
+#licensing {
+  fill: green;
+}
+
+.link.licensing {
+  stroke: green;
+}
+
+.link.resolved {
+  stroke-dasharray: 0,2 1;
+}
+
+circle {
+  fill: #cfc;
+  stroke: #333;
+  stroke-width: 0.5px;
+  
+}
+
+text {
+  font: 14px sans-serif;
+  pointer-events: none;
+  text-shadow: 0 2px 0 #fff, 2px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
