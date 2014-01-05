@@ -1,75 +1,23 @@
-var GraphController = function(options) {
-	var graph;
+var LSDController = function(options) {
 	var self = this;
 	
 	this.options = {
-		links : [],
+		entity : "",
 
 	};
 	this.options = options;
 
-	this.setEntryPoint = function(formDOMO) {
-		formDOMO.attr('action',"/graph/set_node");
-		send(formDOMO,function(d){
-			console.log("this just happend", d);
-			refreshGraph(d);
-		}, "JSON");
-	};
-	
-	this.setEdge = function(formDOMO) {
-		formDOMO.attr('action',"/graph/set_edge");
-		send(formDOMO,function(d){
-			console.log("this just happend", d);
-			refreshGraph(d);
-		}, "JSON");
-	};
-
-	this.listEntryPoints = function() {
-
-	};
-	
-	this.openNodeForm = function(node){
-		get("node",node,function(d){
-			openForm("node",d);
+	this.openFeedForm = function(entity_type, entity_id){
+		get("feed",entity_type,{id:entity_id},function(d){
+			openForm("feed",d);
 		});
-	};
-	
-	this.openEdgeForm = function(edge){
-		get("edge",edge,function(d){
-			openForm("edge",d);
-		});
-	};
-	
-	this.saveRule = function(formDOMO){
-		formDOMO.attr('action',"/graph/set_rule");
-		send(formDOMO,function(d){
-			console.log("this just happend", d);
-			openForm("node",d);
-		}, "html");
-	};
-	
-	this.renameOrSubmitLabel = function(chxbDOMO, smDOMO){
-		if(chxbDOMO.is(':checked')){
-			smDOMO.removeClass("btn-default");
-			smDOMO.addClass("btn-danger");
-			smDOMO.text("Delete?");
-		}else{
-			smDOMO.removeClass("btn-danger");
-			smDOMO.addClass("btn-default");
-			smDOMO.text("Rename");
-		}
 	};
 	
 	////////////////////////////////////////////////////////////
-	var refreshGraph = function(data){
-		$('.graph-goes-here').html("");
-		console.log(this);
-		graph = new Graph(data.nodes,data.links,self.openNodeForm,self.openEdgeForm);
-	};
 	
-	var get = function(entity,data,successFunction) {
+	var get = function(verb,entity_type,data,successFunction) {
 		$.ajax({
-			url : "/graph/get_"+entity,
+			url : "/"+verb+"/"+entity_type,
 			data : data
 			//dataType : "JSON" // you want a difference between normal and ajax-calls, and json is standard
 		}).success(function(json) {
@@ -88,5 +36,5 @@ var GraphController = function(options) {
 		});
 	};
 
-	graph = new Graph(options.nodes,options.links,this.openNodeForm,this.openEdgeForm);
+	
 };
