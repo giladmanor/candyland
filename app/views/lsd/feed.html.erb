@@ -1,0 +1,72 @@
+<%
+ instance = params[:id].present? ? @entity.find(params[:id]) : @entity.new
+  columns = @entity.column_names-["id","account_id","created_at","updated_at"]
+
+  @entities = instance.get_feed_list
+  @entity = instance.get_feed_entity
+%>
+<%= render "confirmation_box"%>
+<% @entities<<@entity.new%>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<%= @entity.name.pluralize%> to <%= instance.name%>
+	</div>
+	<div class="panel-body" style="overflow: auto;height: 646px;">
+		<ul class="list-group">
+			<%
+			@entities.each{|entity|
+			%>
+
+			<li class="list-group-item">
+				<%=form_tag("/show/#{@entity}/#{entity.id || ''}",class:"form-horizontal", role:"form") do%>
+				<%
+				@entity.to_info_keys.each{|k|
+				%>
+				<div class="form-group">
+					<label for="<%= k%>" class="col-sm-2 control-label"><%= k%></label>
+					<div class="col-sm-10">
+						<input class="form-control" id="<%= k%>" placeholder="<%= entity[k]%>">
+					</div>
+
+				</div>
+
+				<%
+				}
+				%>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-default">Save</button>
+					</div>
+				</div>
+				
+				<% end %>
+			</li>
+
+			<%
+			}
+			%>
+
+		</ul>
+	</div>
+</div>
+<script>
+	function openForm(type, data) {
+		$("#formHolderBackground").show();
+		$("#formHolder").html(type);
+		var name = "#" + type + "FormTemplate";
+		$("#formHolder").html(data);
+	}
+
+	function closeForm() {
+		$("#formHolder").html("");
+		$("#formHolderBackground").hide();
+	}
+
+	var lsd = new LSDController(); 
+</script>
+
+<div id="formHolderBackground" style="background-color: black;opacity: 0.4;position:absolute;top:0;left:0;width: 100%;height: 100%;display: none" onclick="closeForm()">
+
+</div>
+<div id="formHolder" style="z-index: 2;position: fixed;top: 130px;width: 80%"></div>
