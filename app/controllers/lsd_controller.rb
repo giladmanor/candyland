@@ -24,6 +24,10 @@ class LsdController < AdminController
     #do nothing, just show the fricking form
   end
   
+  def feed
+    render :feed, :layout=>false
+  end
+  
   def set
     #return unless params[:id].present?
     
