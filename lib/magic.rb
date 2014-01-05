@@ -27,6 +27,27 @@ module Magic
       t.options[:class_name].nil? ? t.name.to_s.camelize.constantize : t.options[:class_name].constantize
     end
     
+    def has_feed(entity,label)
+      class_eval <<-EB
+    
+        def get_feed_entity
+          #{entity.to_s.camelize.constantize}
+        end
+        
+        def get_feed_list
+          puts "$ "*20 + "#{entity.to_s.pluralize.to_sym}"
+          self.send("#{entity.to_s.pluralize}".to_sym)
+        end
+        
+        def get_feed_label
+          "#{label || entity.to_s.humanize}"
+        end  
+      
+      EB
+    end
+    
+    
+    
     
     def acts_as_image field_name, separator_field
       

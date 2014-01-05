@@ -4,5 +4,7 @@ Prospects::Application.routes.draw do
   get 'admin(/:action)' , :controller=>:admin
   
   get 'list(/:entity)', :controller=>:lsd, :action=>:list
+  get 'feed(/:entity)', :controller=>:lsd, :action=>:feed
+  
   post '(/:action(/:entity(/:id)))', :controller=>:lsd
 end
