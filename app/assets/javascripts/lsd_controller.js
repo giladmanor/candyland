@@ -13,6 +13,12 @@ var LSDController = function(options) {
 		});
 	};
 	
+	this.setFeedItem = function(formDOM){
+		send(formDOM,function(d){
+			alert("saved");
+		});
+	};
+	
 	////////////////////////////////////////////////////////////
 	
 	var get = function(verb,entity_type,data,successFunction) {

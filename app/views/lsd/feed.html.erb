@@ -2,15 +2,16 @@
  instance = params[:id].present? ? @entity.find(params[:id]) : @entity.new
   columns = @entity.column_names-["id","account_id","created_at","updated_at"]
 
-  @entities = instance.get_feed_list
+  @entities = instance.get_feed_list.map{|i| i}
   @entity = instance.get_feed_entity
 %>
 <%= render "confirmation_box"%>
-<% @entities<<@entity.new%>
+<% @entities+[@entity.new]%>
 
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<%= @entity.name.pluralize%> to <%= instance.name%>
+		<span class="glyphicon glyphicon-remove" style="float: right" onclick="closeForm()"></span>
 	</div>
 	<div class="panel-body" style="overflow: auto;height: 646px;">
 		<ul class="list-group">
@@ -19,7 +20,8 @@
 			%>
 
 			<li class="list-group-item">
-				<%=form_tag("/show/#{@entity}/#{entity.id || ''}",class:"form-horizontal", role:"form") do%>
+				<%=form_tag("/set/#{@entity}/#{entity.id || ''}",class:"form-horizontal", role:"form",onsubmit:"lsd.setFeedItem($(this))") do%>
+				<input type="hidden" name="id" value="<%=entity.id%>" />
 				<%
 				@entity.to_info_keys.each{|k|
 				%>
