@@ -15,7 +15,7 @@ var LSDController = function(options) {
 	
 	this.setFeedItem = function(formDOM){
 		send(formDOM,function(d){
-			alert("saved");
+			console.log(d);
 		});
 	};
 	
@@ -35,6 +35,7 @@ var LSDController = function(options) {
 		var valuesToSubmit = formDOM.serialize();
 		$.ajax({
 			url : formDOM.attr('action'), //sumbits it to the given url of the form
+			method:"post",
 			data : valuesToSubmit,
 			dataType : dataType || "JSON" // you want a difference between normal and ajax-calls, and json is standard
 		}).success(function(json) {

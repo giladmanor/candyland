@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140103211759) do
+ActiveRecord::Schema.define(version: 20140107084006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,9 +26,17 @@ ActiveRecord::Schema.define(version: 20140103211759) do
     t.integer  "prospect_id"
     t.string   "content"
     t.string   "status"
-    t.string   "result"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "retweeted",   default: false
+    t.boolean  "followed",    default: false
+    t.boolean  "replied",     default: false
+    t.boolean  "favorited",   default: false
+    t.integer  "retweets",    default: 0
+    t.integer  "follows",     default: 0
+    t.integer  "replies",     default: 0
+    t.integer  "favorites",   default: 0
+    t.integer  "traffic",     default: 0
   end
 
   add_index "approches", ["prospect_id"], name: "index_approches_on_prospect_id", using: :btree

@@ -6,7 +6,7 @@
   @entity = instance.get_feed_entity
 %>
 <%= render "confirmation_box"%>
-<% @entities+[@entity.new]%>
+<% @entities+=[@entity.new]%>
 
 <div class="panel panel-default">
 	<div class="panel-heading">
@@ -20,20 +20,46 @@
 			%>
 
 			<li class="list-group-item">
-				<%=form_tag("/set/#{@entity}/#{entity.id || ''}",class:"form-horizontal", role:"form",onsubmit:"lsd.setFeedItem($(this))") do%>
+				<%=form_tag("/set/#{@entity}/#{entity.id || ''}",class:"form-horizontal", role:"form",onsubmit:"lsd.setFeedItem($(this));return false;", method:"post") do%>
+				<input type="hidden" name="prospect_id" value="<%=instance.id%>" />
 				<input type="hidden" name="id" value="<%=entity.id%>" />
 				<%
 				@entity.to_info_keys.each{|k|
+					
+				logger.debug k
+				desc = @entity.describe(k.to_s)
+	
+				case desc[:type].to_sym
+				when :string, :integer, :decimal, :float
 				%>
 				<div class="form-group">
 					<label for="<%= k%>" class="col-sm-2 control-label"><%= k%></label>
 					<div class="col-sm-10">
-						<input class="form-control" id="<%= k%>" placeholder="<%= entity[k]%>">
+						<input class="form-control" id="<%= k%>" name="<%= k%>" placeholder="<%= entity[k]%>">
 					</div>
 
 				</div>
-
 				<%
+				when :boolean
+				%>
+				<div class="form-group">
+					<label for="<%= k%>" class="col-sm-2 control-label"><%= k%></label>
+					<div class="col-sm-10">
+						<div class="radio">
+						  <label>
+						    <input type="radio" name="<%= k%>" id="<%= k%>1" value="true" <%= entity[k]==true ? "checked" : ""%>> Yes
+						  </label>
+						</div>
+						<div class="radio">
+						  <label>
+						    <input type="radio" name="<%= k%>" id="<%= k%>2" value="false" <%= entity[k]==true ? "" : "checked"%>>
+						    No
+						  </label>
+						</div>
+					</div>
+				</div>
+				<%
+				end
 				}
 				%>
 				<div class="form-group">

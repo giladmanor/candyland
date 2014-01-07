@@ -2,7 +2,7 @@ class Prospect < ActiveRecord::Base
   belongs_to :account
   belongs_to :user
   has_many :approches
-  has_feed :approch,"feed"
+  has_feed :approch,"actions"
   to_info :name, :twitter,:likes, :assigned_to
   
   
