@@ -1,15 +1,27 @@
 prospects
 =========
 
-social media prospect manager
+Social Media prospect manager
+
+This product manages social influencers and approaches to them per approach, the impact it made
+
+this is currently a pre release and does not include any smart calculations.
 
 
+
+Installation:
+============
+
+install as standard RoR application and run rake for seeding the database
+then you will be able to log into the system via default user: 
+login: a
+password: a
 
 
 
 License MIT
 ==========
-Copyright (c) 2014 Lazy eye developer
+Copyright (c) 2014 Lazy eye developer, Jishai Evers, Barbara Gian
 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
