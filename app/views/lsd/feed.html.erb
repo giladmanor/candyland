@@ -20,7 +20,7 @@
 			%>
 
 			<li class="list-group-item">
-				<%=form_tag("/set/#{@entity}/#{entity.id || ''}",class:"form-horizontal", role:"form",onsubmit:"lsd.setFeedItem($(this));return false;", method:"post") do%>
+				<%=form_tag("/set/#{@entity}/#{entity.id || ''}",class:"form-inline", role:"form",onsubmit:"lsd.setFeedItem($(this));return false;", method:"post") do%>
 				<input type="hidden" name="prospect_id" value="<%=instance.id%>" />
 				<input type="hidden" name="id" value="<%=entity.id%>" />
 				<%
@@ -30,33 +30,27 @@
 				desc = @entity.describe(k.to_s)
 	
 				case desc[:type].to_sym
-				when :string, :integer, :decimal, :float
+				when :string
 				%>
 				<div class="form-group">
-					<label for="<%= k%>" class="col-sm-2 control-label"><%= k%></label>
-					<div class="col-sm-10">
-						<input class="form-control" id="<%= k%>" name="<%= k%>" placeholder="<%= entity[k]%>">
-					</div>
-
+					<%= k.to_s.humanize%><br>
+					<input class="form-control" id="<%= k%>" name="<%= k%>" placeholder="<%= entity[k]%>">
+				</div>
+				<%
+				when :integer, :decimal, :float
+				%>
+				<div class="form-group" style="width: 65px">
+					<%= k.to_s.humanize%><br>
+					<input class="form-control" id="<%= k%>" name="<%= k%>" placeholder="<%= entity[k]%>">
 				</div>
 				<%
 				when :boolean
 				%>
-				<div class="form-group">
-					<label for="<%= k%>" class="col-sm-2 control-label"><%= k%></label>
-					<div class="col-sm-10">
-						<div class="radio">
-						  <label>
-						    <input type="radio" name="<%= k%>" id="<%= k%>1" value="true" <%= entity[k]==true ? "checked" : ""%>> Yes
-						  </label>
-						</div>
-						<div class="radio">
-						  <label>
-						    <input type="radio" name="<%= k%>" id="<%= k%>2" value="false" <%= entity[k]==true ? "" : "checked"%>>
-						    No
-						  </label>
-						</div>
-					</div>
+				<div class="checkbox">
+					<label>
+						<span class="label label-default"><%= k.to_s.humanize%></span><br>
+				    	<input name="<%= k%>" value="true" type="checkbox" <%= entity[k]==true ? "checked" : ""%>> 
+				    </label>
 				</div>
 				<%
 				end

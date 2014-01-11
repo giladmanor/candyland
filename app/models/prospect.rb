@@ -7,7 +7,7 @@ class Prospect < ActiveRecord::Base
   
   
   def assigned_to
-     self.user.login
+     self.user.nil? ? "" : self.user.login
   end
   
 end
