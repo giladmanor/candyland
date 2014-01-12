@@ -1,5 +1,4 @@
-prospects
-=========
+#CandyLand
 
 Social Media prospect manager
 
@@ -8,20 +7,40 @@ This product manages social influencers and approaches to them per approach, the
 this is currently a pre release and does not include any smart calculations.
 
 
+###Try Candyland online
+Access our dev server @ [candyland](http://192.241.183.52) and create your own account.
 
-Installation:
-============
 
-install as standard RoR application and run rake for seeding the database
-then you will be able to log into the system via default user: 
+###Install your one server
+
+Install as standard RoR application
+
+Version information:
+- Ruby 2+
+- Rails 4+
+- Prostgress 9.1.11
+
+Copy/fork this repository into a dorectory on your machine. Dont forget to rub bundle after you copy local directory.
+
+Update the database name and user password in *./conf/database.yml* file
+
+Initiate the database with the following commands:
+```
+rake db:create
+rake db:migrate
+rake db:seed
+```
+
+Now you will be able to log into the system via default user: 
+```
 login: a
 password: a
+```
 
 
+###License MIT
 
-License MIT
-==========
-Copyright (c) 2014 Lazy eye developer, Jishai Evers, Barbara Gian
+Copyright (c) 2014 [Lazy eye developer](https://twitter.com/giladmanor), [Jishai Evers](https://twitter.com/Jishai), [Barbara Gian](https://twitter.com/barb_gian)
 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
