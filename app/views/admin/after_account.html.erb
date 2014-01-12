@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Candyland</title>
+		<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+		<%= csrf_meta_tags %>
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+	</head>
+
+	<body style="background-image: url(/assets/logo_large.png); background-repeat:no-repeat;background-attachment:fixed;background-position:right bottom; ">
+
+		<h1 class="supertext text-right " style="width: 483px;margin-top: 20%">Thank You!</h1>
+		<h2 class="subtext " style="width: 483px;margin-left: 25%;">Please Check your Mail </h2>
+		<h2 class="subtext " style="width: 483px;margin-left: 25%;">And follow the instructions</h2>
+
+	</body>
+	<script>
+		$(document).ready(function() {
+			setTimeout(function() {
+				$(".subtext").addClass("lll");
+				
+			},1800);
+			
+		})
+
+	</script>
+</html>

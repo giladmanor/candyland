@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-  before_filter :auth_filter, :except=>[:login]
+  before_filter :auth_filter, :except=>[:login, :after_account]
   
 
   def login
@@ -16,6 +16,13 @@ class AdminController < ApplicationController
     render "login", :layout=>false
   end
   
+  def velidate_new_account
+    
+  end
+  
+  def after_account
+    render :layout=>false
+  end
 
   def index
   

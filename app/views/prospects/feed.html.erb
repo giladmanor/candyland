@@ -1,0 +1,94 @@
+<%
+ instance = params[:id].present? ? @entity.find(params[:id]) : @entity.new
+  columns = @entity.column_names-["id","account_id","created_at","updated_at"]
+
+  @entities = instance.get_feed_list.map{|i| i}
+  @entity = instance.get_feed_entity
+%>
+<%= render "confirmation_box"%>
+<% @entities+=[@entity.new]%>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<%= @entity.name.pluralize%> to <%= instance.name%>
+		<span class="glyphicon glyphicon-remove" style="float: right" onclick="closeForm()"></span>
+	</div>
+	<div class="panel-body" style="overflow: auto;height: 646px;">
+		<ul class="list-group">
+			<%
+			@entities.each{|entity|
+			%>
+
+			<li class="list-group-item">
+				<%=form_tag("/set/#{@entity}/#{entity.id || ''}",class:"form-inline", role:"form",onsubmit:"lsd.setFeedItem($(this));return false;", method:"post") do%>
+				<input type="hidden" name="prospect_id" value="<%=instance.id%>" />
+				<input type="hidden" name="id" value="<%=entity.id%>" />
+				<%
+				@entity.to_info_keys.each{|k|
+					
+				logger.debug k
+				desc = @entity.describe(k.to_s)
+	
+				case desc[:type].to_sym
+				when :string
+				%>
+				<div class="form-group">
+					<%= k.to_s.humanize%><br>
+					<input class="form-control" id="<%= k%>" name="<%= k%>" placeholder="<%= entity[k]%>">
+				</div>
+				<%
+				when :integer, :decimal, :float
+				%>
+				<div class="form-group" style="width: 65px">
+					<%= k.to_s.humanize%><br>
+					<input class="form-control" id="<%= k%>" name="<%= k%>" placeholder="<%= entity[k]%>">
+				</div>
+				<%
+				when :boolean
+				%>
+				<div class="checkbox">
+					<label>
+						<span class="label label-default"><%= k.to_s.humanize%></span><br>
+				    	<input name="<%= k%>" value="true" type="checkbox" <%= entity[k]==true ? "checked" : ""%>> 
+				    </label>
+				</div>
+				<%
+				end
+				}
+				%>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-default">Save</button>
+					</div>
+				</div>
+				
+				<% end %>
+			</li>
+
+			<%
+			}
+			%>
+
+		</ul>
+	</div>
+</div>
+<script>
+	function openForm(type, data) {
+		$("#formHolderBackground").show();
+		$("#formHolder").html(type);
+		var name = "#" + type + "FormTemplate";
+		$("#formHolder").html(data);
+	}
+
+	function closeForm() {
+		$("#formHolder").html("");
+		$("#formHolderBackground").hide();
+	}
+
+	var lsd = new LSDController(); 
+</script>
+
+<div id="formHolderBackground" style="background-color: black;opacity: 0.4;position:absolute;top:0;left:0;width: 100%;height: 100%;display: none" onclick="closeForm()">
+
+</div>
+<div id="formHolder" style="z-index: 2;position: fixed;top: 130px;width: 80%"></div>
