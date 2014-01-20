@@ -1,2 +1,10 @@
 class ProspectsController < AdminController
+  
+  
+  
+  
+  
+  
+  
+  
 end
