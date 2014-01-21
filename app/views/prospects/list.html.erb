@@ -24,7 +24,13 @@
 				%>
 
 				<tr>
-					<td><span style="color: silver;font-size: 8px"><%= entity.id%></span>&nbsp;</td>
+					<td>
+						<span style="color: silver;font-size: 8px"><%= entity.id%></span>&nbsp;
+						<%
+						unless entity.id.nil? 
+						%><div style="position: absolute" id="formHolder<%=entity.id%>" ></div>
+						<%end%>
+					</td>
 					<%
 					Prospect.to_info_keys.each{|k|
 					%><td><%= entity.send(k)%></td><%
@@ -50,7 +56,7 @@
 					</td>
 
 				</tr>
-
+				
 				<%
 				}
 				%>
@@ -61,22 +67,16 @@
 	</div>
 </div>
 <script>
-	function openForm(type, data) {
-		$("#formHolderBackground").show();
-		$("#formHolder").html(type);
-		var name = "#" + type + "FormTemplate";
-		$("#formHolder").html(data);
+	function openForm(id, data) {
+		$("#formHolder"+id).html(data);
 	}
 
-	function closeForm() {
-		$("#formHolder").html("");
-		$("#formHolderBackground").hide();
+	function closeForm(id) {
+		$("#formHolder"+id).html("");
+		
 	}
 
-	var lsd = new LSDController(); 
+	var lsd = new ProspectsController(); 
 </script>
 
-<div id="formHolderBackground" style="background-color: black;opacity: 0.4;position:absolute;top:0;left:0;width: 100%;height: 100%;display: none" onclick="closeForm()">
-	
-</div>
-<div id="formHolder" style="z-index: 2;position: fixed;top: 130px;width: 80%"></div>
+

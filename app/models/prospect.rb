@@ -1,7 +1,7 @@
 class Prospect < ActiveRecord::Base
   belongs_to :account
   belongs_to :user
-  has_many :approches
+  has_many :approches, :order => "created_at DESC"
   
   belongs_to :gender
   belongs_to :age_group

@@ -12,8 +12,25 @@ class ProspectsController < AdminController
   end
   
   def feed
+    @entity = Prospect
     render :feed, :layout=>false
   end
+  
+  def set_feed
+    entity = params[:id].present? ? Approch.find(params[:id]) : Approch.new 
+    entity.set(params.except(:id))
+    
+    if entity.save
+      @info = "#{Approch} saved"
+      logger.debug @info  
+    else
+      @error = "Server error: #{entity.errors.messages.values.join(', ')}"
+      logger.debug @error
+    end
+    
+    render :json=>{:ok=>"ok"}
+  end
+  
   
   def set
     #return unless params[:id].present?
