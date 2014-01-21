@@ -15,3 +15,19 @@ role_lock = [
 
 role = Role.create({account: account, name: "tech", code: "tech", lock: role_lock})
 User.create({ account: account, role: role,  login: "a", password: "a"})
+
+AgeGroup.create({name:"Under 18"})
+AgeGroup.create({name:"18-25"})
+AgeGroup.create({name:"26-35"})
+AgeGroup.create({name:"36-45"})
+AgeGroup.create({name:"46-65"})
+AgeGroup.create({name:"Old geezer (65+)"})
+
+
+Gender.create({name:"Male"})
+Gender.create({name:"Female"})
+Gender.create({name:"Camp"})
+Gender.create({name:"Quear"})
+Gender.create({name:"Dike"})
+Gender.create({name:"Undefined"})
+

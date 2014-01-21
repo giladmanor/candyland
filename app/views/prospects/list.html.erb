@@ -1,9 +1,8 @@
 <%= render "confirmation_box"%>
-<% @entities<<@entity.new%>
 
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<%= @entity.name.pluralize%>
+		Prospects
 	</div>
 	<div class="panel-body">
 		<table class="table table-striped">
@@ -12,7 +11,7 @@
 				<tr>
 					<th width="10px"></th>
 					<%
-					@entity.to_info_keys.each{|k|
+					Prospect.to_info_keys.each{|k|
 					%><th><%= k.to_s.humanize%></th><%
 					}
 					%>
@@ -21,23 +20,23 @@
 			</thead>
 			<tbody>
 				<%
-				@entities.each{|entity|
+				(@entities+[Prospect.new]).each{|entity|
 				%>
 
 				<tr>
 					<td><span style="color: silver;font-size: 8px"><%= entity.id%></span>&nbsp;</td>
 					<%
-					@entity.to_info_keys.each{|k|
+					Prospect.to_info_keys.each{|k|
 					%><td><%= entity.send(k)%></td><%
 					}
 					%>
 
 					<td width="180px"><span>
-						<%=form_tag("/show/#{@entity}/#{entity.id || ''}",class:"form-horizontal", role:"form") do%>
+						<%=form_tag("/prospects/show/#{entity.id || ''}",class:"form-horizontal", role:"form") do%>
 						<%
 						if entity.respond_to?("get_feed_entity") && !entity.id.nil?
 							%>
-							<button class="btn btn-default" onclick="lsd.openFeedForm('<%=@entity%>','<%=entity.id%>');return false;" >
+							<button class="btn btn-default" onclick="lsd.openFeedForm('<%=Prospect%>','<%=entity.id%>');return false;" >
 							<%= entity.get_feed_label%>
 							</button>
 							<%
@@ -47,7 +46,7 @@
 						<button value="Edit" class="btn btn-default">
 							<%= entity.id.nil? ? "New" : "Edit"%>
 						</button> <% end %></span>
-						<a style="float: right;margin-top: -27px;display: <%= entity.id.nil? ? "none" : "block"%>" onclick="confirmAction('Delete this <%= @entity%>?','<%= entity.id%>');return false;" href="#" class="btn btn-danger btn-xs" >x</a>
+						<a style="float: right;margin-top: -27px;display: <%= entity.id.nil? ? "none" : "block"%>" onclick="confirmAction('Delete this <%= Prospect%>?','<%= entity.id%>');return false;" href="#" class="btn btn-danger btn-xs" >x</a>
 					</td>
 
 				</tr>
@@ -55,7 +54,8 @@
 				<%
 				}
 				%>
-
+				
+				
 			</tbody>
 		</table>
 	</div>

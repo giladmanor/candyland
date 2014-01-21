@@ -11,12 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140107084006) do
+ActiveRecord::Schema.define(version: 20140121122407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accounts", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "age_groups", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -41,12 +47,16 @@ ActiveRecord::Schema.define(version: 20140107084006) do
 
   add_index "approches", ["prospect_id"], name: "index_approches_on_prospect_id", using: :btree
 
+  create_table "genders", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "prospects", force: true do |t|
     t.integer  "account_id"
     t.integer  "user_id"
     t.string   "name"
-    t.string   "gender"
-    t.string   "age"
     t.string   "location"
     t.string   "twitter"
     t.string   "facebook"
@@ -55,6 +65,8 @@ ActiveRecord::Schema.define(version: 20140107084006) do
     t.text     "likes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "gender_id"
+    t.integer  "age_group_id"
   end
 
   add_index "prospects", ["account_id"], name: "index_prospects_on_account_id", using: :btree

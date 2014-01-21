@@ -1,6 +1,9 @@
 <%
+ @entity = Prospect
+ 
  instance = params[:id].present? ? @entity.find(params[:id]) : @entity.new
-  columns = @entity.column_names-["id","account_id","created_at","updated_at"]
+ columns = [:user_id, :name,:gender_id, :age_group_id, :location, :twitter, :facebook, :blog, :other, :likes].map{|c| c.to_s}
+ labels = {"user_id"=>"Assigned to"}
 
 %>
 <div class="panel panel-default">
@@ -9,13 +12,13 @@
 	</div>
 	<div class="panel-body">
 
-		<%= form_tag("/set/#{@entity}", role:"form", enctype:"multipart/form-data") do%>
+		<%= form_tag("/prospects/set", role:"form", enctype:"multipart/form-data") do%>
 		<input type="hidden" name="id" value="<%= params[:id]%>" />
 		<%
 		columns.each{|k|
 		%>
 		<div class="form-group">
-			<label for="<%= k%>"><%= k.humanize%></label>
+			<label for="<%= k%>"><%= labels[k] || k.humanize%></label>
 			<%
 			logger.debug k
 			desc = @entity.describe(k)
@@ -26,7 +29,11 @@
 			<input name="<%= k%>" type="text" class="form-control" id="<%= k%>" placeholder="" value="<%= instance[k]%>">
 			<%
 			when :belongs_to
-			%><%= select_tag(k, options_for_select(desc[:entity].all.where(:account_id=>@account.id).map{|o| [o.name, o.id]})) %><%
+				if desc[:entity].respond_to? :account
+				%><%= select_tag(k, options_for_select(desc[:entity].all.where(:account_id=>@account.id).map{|o| [o.name, o.id]},instance[k]), class:"form-control") %><%
+				else
+				%><%= select_tag(k, options_for_select(desc[:entity].all.map{|o| [o.name, o.id]},instance[k]), class:"form-control") %><%
+				end
 			when :text
 			%>			<textarea name="<%= k%>" class="form-control" rows="3"><%= instance[k]%></textarea><%
 			when :image
