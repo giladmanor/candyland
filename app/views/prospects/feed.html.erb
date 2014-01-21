@@ -1,6 +1,6 @@
 <%
 	instance = params[:id].present? ? @entity.find(params[:id]) : @entity.new
-  	columns = @entity.column_names-["id","account_id","created_at","updated_at"]
+  	columns = ["content","created_at","retweeted", "followed", "replied","favorited","retweets", "follows", "replies", "favorites", "traffic"]
 
   	@entities = instance.get_feed_list.map{|i| i}
   	@entity = instance.get_feed_entity
@@ -24,7 +24,7 @@
 				<input type="hidden" name="prospect_id" value="<%=instance.id%>" />
 				<input type="hidden" name="id" value="<%=entity.id%>" />
 				<%
-				@entity.to_info_keys.each{|k|
+				columns.each{|k|
 					
 				logger.debug k
 				desc = @entity.describe(k.to_s)
@@ -34,7 +34,13 @@
 				%>
 				<div class="form-group">
 					<%= k.to_s.humanize%><br>
-					<input class="form-control" id="<%= k%>" name="<%= k%>" value="<%= entity[k]%>">
+					<input class="form-control" id="<%= k%>" name="<%= k%>" value="<%= entity[k] %>">
+				</div>
+				<%when :datetime
+				%>
+				<div class="form-group">
+					<%= k.to_s.humanize%><br>
+					<%= (entity[k] || Time.now).to_formatted_s(:short)%>
 				</div>
 				<%
 				when :integer, :decimal, :float
